@@ -1,3 +1,10 @@
+provider "aws" {
+  # ...
+}
+
+backend "s3" {
+  # Backend configuration for storing Terraform state
+}
 # backend.tf
 
 backend "s3" {
