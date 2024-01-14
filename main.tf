@@ -1,3 +1,9 @@
+# AWS provider configuration
+provider "aws" {
+  # ...
+}
+
+# Define your AWS resources and other configurations here
 backend "s3" {
   # ...
 }
