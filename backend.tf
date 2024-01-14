@@ -1,8 +1,7 @@
 terraform {
   backend "s3" {
-    bucket         = "mrcloudbook-cicd-bucket"
-    key            = "my-terraform-environment/main"
-    region         = "ap-southeast-2"
-    dynamodb_table = "mrcloudbook-dynamo-db-table"
+    bucket = "mrcloudbook-cicd-bucket"
+    key    = "terraform.tfstate"
+    region = "ap-southeast-2"
   }
 }
