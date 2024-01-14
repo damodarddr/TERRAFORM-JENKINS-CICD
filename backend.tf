@@ -1,7 +1,8 @@
-provider "aws" {
-  # ...
-}
-backend "s3" {
-  # other backend configurations
-  region = "us-east-1"
+terraform {
+  backend "s3" {
+    bucket         = "mrcloudbook-cicd-bucket"
+    key            = "my-terraform-environment/main"
+    region         = "us-east-1"
+    dynamodb_table = "mrcloudbook-dynamo-db-table"
+  }
 }
