@@ -1,3 +1,16 @@
+provider "aws" {
+  region = "ap-southeast-2"
+  # other provider configurations...
+}
+
+terraform {
+  backend "s3" {
+    bucket = "mrcloudbook-cicd-bucket"
+    key    = "path/to/terraform.tfstate"
+    region = "ap-southeast-2"
+    # other backend configurations...
+  }
+}
 variable "aws_region" {
   description = "The AWS region to create things in."
   default     = "us-east-1"
