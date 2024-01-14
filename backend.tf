@@ -1,7 +1,4 @@
-terraform {
-  backend "s3" {
-    bucket = "mrcloudbook-cicd-bucket"
-    key    = "terraform.tfstate"
-    region = "ap-southeast-2"
-  }
+backend "s3" {
+  # other backend configurations
+  region = "ap-southeast-2"
 }
