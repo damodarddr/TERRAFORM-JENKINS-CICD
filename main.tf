@@ -1,12 +1,12 @@
-# AWS provider configuration
 provider "aws" {
   # ...
 }
 
-# Define your AWS resources and other configurations here
 backend "s3" {
-  # ...
+  # Backend configuration for storing Terraform state
 }
+
+# Define your AWS resources and other configurations here
 
 resource "aws_instance" "Ajay" {
   ami                    = var.ami_id
