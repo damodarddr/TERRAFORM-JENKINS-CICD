@@ -1,4 +1,4 @@
 backend "s3" {
   # other backend configurations
-  region = "ap-southeast-2"
+  region = "us-east-1"
 }
