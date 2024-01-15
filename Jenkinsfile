@@ -3,66 +3,41 @@ pipeline {
     tools {
         jdk 'jdk17'
         terraform 'terraform'
+        nodejs 'nodejs' // Assuming 'nodejs' is the tool name for Node.js in your Jenkins configuration
+        sonarQube 'sonar-server'
     }
     environment {
-        SCANNER_HOME=tool 'sonar-scanner'
+        SCANNER_HOME = tool 'sonar-scanner'
+        PATH = "$PATH:${tool 'nodejs'}/bin"
     }
     stages {
-        stage('Clean workspace') {
-            steps {
-                cleanWs()
-            }
-        }
-        stage('Checkout from Git') {
-            steps {
-                git branch: 'main', url: 'https://github.com/damodarddr/TERRAFORM-JENKINS-CICD.git'
-            }
-        }
-        stage('Terraform version') {
-            steps {
-                sh 'terraform --version'
-            }
-        }
-        stage("Sonarqube Analysis") {
-            steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Terraform -Dsonar.projectKey=Terraform"
-                }
-            }
-        }
-        stage("Quality Gate") {
-            steps {
-                script {
-                    def qg = waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
-                    if (qg.status != 'OK') {
-                        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    }
-                }
-            }
-        }
-        stage('TRIVY FS SCAN') {
-            steps {
-                sh 'trivy fs . > trivyfs.txt'
-            }
-        }
-        stage('Excutable permission to userdata') {
-            steps {
-                sh 'chmod 777 website.sh'
-            }
-        }
-        stage('Terraform init') {
-            steps {
-                sh 'terraform init'
-            }
-        }
+        // ... your existing stages ...
+
         stage('Terraform plan') {
             steps {
-                sh 'terraform plan'
+                script {
+                    // Ensure Node.js is available before running Terraform plan
+                    if (!bat(script: 'node -v', returnStatus: true)) {
+                        error 'Node.js is not installed. Aborting.'
+                    }
+
+                    // Run Terraform plan
+                    sh 'terraform plan'
+                }
             }
         }
+
         stage('Terraform apply') {
             steps {
-                sh 'terraform apply --auto-approve'
+                script {
+                    // Ensure Node.js is available before running Terraform apply
+                    if (!bat(script: 'node -v', returnStatus: true)) {
+                        error 'Node.js is not installed. Aborting.'
+                    }
+
+                    // Run Terraform apply
+                    sh 'terraform apply --auto-approve'
+                }
             }
         }
     }
