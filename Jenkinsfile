@@ -3,8 +3,8 @@ pipeline {
     tools {
         jdk 'jdk17'
         terraform 'terraform'
-        nodejs 'nodejs' // Assuming 'nodejs' is the tool name for Node.js in your Jenkins configuration
-        sonarQube 'sonar-server'
+        nodejs 'nodejs' // Use the correct tool type for Node.js (e.g., 'nodejs')
+        sonarqube 'sonar-server' // Use the correct tool type for SonarQube (e.g., 'sonarqube')
     }
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
